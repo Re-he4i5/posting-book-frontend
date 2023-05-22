@@ -8,16 +8,17 @@ function CreateForm(props) {
         label="title"
         id="title"
         value={props.inputs["title"]}
-      
+        onChange={(e) => props.onChange("title",e)}
         />
       </div>
 
       <div>
-      <TextField
-        label="content"
-        id="content"
-        value={props.inputs["content"]}
-      />
+        <TextField
+          label="body"
+          id="body"
+          value={props.inputs["body"]}
+          onChange={(e) => props.onChange("body",e)}
+        />
       </div>
     </form>
   )

@@ -9,10 +9,11 @@ class App extends React.Component {
         this.state = {
             createFormInputs: {
                 title: "",
-                content: "",
+                body: "",
             },
             posts: [],
         }
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     get axios() {
@@ -24,6 +25,15 @@ class App extends React.Component {
                 'X-Requested-With': 'XMLHttpRequest'
             },
             responseType: 'json'
+        });
+    }
+
+    handleInputChange(itemName, e) {
+        const newInputs = Object.assign({}, this.state.createFormInputs)
+        newInputs[itemName] = e.target.value;
+
+        this.setState({
+            createFormInputs: newInputs
         });
     }
 
@@ -56,6 +66,7 @@ class App extends React.Component {
             <div className="App">
                 <CreateForm
                     inputs={this.state.createFormInputs}
+                    onChange={this.handleInputChange}
                 
                 />
                 

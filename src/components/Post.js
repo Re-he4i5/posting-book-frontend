@@ -9,7 +9,7 @@ class Post extends React.Component {
         return (
             <div>
                 {this.props.post.title}
-                {this.props.post.content}
+                {this.props.post.body}
             </div>
         );
     }
