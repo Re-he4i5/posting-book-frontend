@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Post from "./components/Post";
+import CreateForm from "./components/CreateForm"
 
 class App extends React.Component {
     constructor(props) {
@@ -43,16 +44,22 @@ class App extends React.Component {
         return (
             this.state.posts.map((post) => {
                 return (
-                  <Post key={post.id} post={post} />
+                    <Post key={post.id} post={post} />
                 )
             })
         );
     }
 
+    // ページの表示
     render() {
         return (
             <div className="App">
-                            {this.getPosts()}
+                <CreateForm
+                    inputs={this.state.createFormInputs}
+                
+                />
+                
+                {this.getPosts()}
             </div>
         );
     }
