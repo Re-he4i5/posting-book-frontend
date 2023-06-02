@@ -16,6 +16,7 @@ class App extends React.Component {
             posts: [],
         }
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handlePostSubmit = this.handlePostSubmit.bind(this);
     }
 
     get axios() {
@@ -37,6 +38,31 @@ class App extends React.Component {
         this.setState({
             createFormInputs: newInputs
         });
+    }
+
+    handlePostSubmit(e) {
+        e.preventDefault();
+        const inputValues = Object.values(this.state.createFormInputs);
+
+        if (inputValues.every(value => value)) {
+            this.axios.post("/posts", {
+                post: this.state.createFormInputs,
+            })
+                .then(res => {
+                    const posts = this.state.posts.slice();
+                    posts.push(res["data"]);
+                    this.setState({
+                        posts: posts,
+                        createFormInputs: {
+                            title: "",
+                            content: "",
+                        },
+                    });
+                })
+                .catch(data => {
+                    console.log(data)
+                });
+        }
     }
 
     componentDidMount() {
@@ -75,7 +101,9 @@ class App extends React.Component {
                         <CreateForm
                             inputs={this.state.createFormInputs}
                             onChange={this.handleInputChange}
+                            onSubmit={this.handlePostSubmit}
                         />
+
                     </Box>
                     <Box p={4}>
                         <Grid container spaceng={5}>

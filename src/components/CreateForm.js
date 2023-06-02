@@ -1,4 +1,5 @@
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 function CreateForm(props) {
   return (
@@ -19,6 +20,13 @@ function CreateForm(props) {
           value={props.inputs["body"]}
           onChange={(e) => props.onChange("body",e)}
         />
+      </div>
+
+      <div>
+        <Button onClick={props.onSubmit}
+        >
+          Create
+        </Button>
       </div>
     </form>
   )
