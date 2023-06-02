@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import Box from "@mui/material/Box"
+import Grid from "@mui/material/Grid";
 import Post from "./components/Post";
 import CreateForm from "./components/CreateForm"
 
@@ -54,7 +56,11 @@ class App extends React.Component {
         return (
             this.state.posts.map((post) => {
                 return (
-                    <Post key={post.id} post={post} />
+                    <Grid item xs={4} key={post.id}>
+                        <Post
+                            post={post}
+                        />
+                    </Grid>
                 )
             })
         );
@@ -64,13 +70,19 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <CreateForm
-                    inputs={this.state.createFormInputs}
-                    onChange={this.handleInputChange}
-                
-                />
-                
-                {this.getPosts()}
+                <Box p={5}>
+                    <Box p={5}>
+                        <CreateForm
+                            inputs={this.state.createFormInputs}
+                            onChange={this.handleInputChange}
+                        />
+                    </Box>
+                    <Box p={4}>
+                        <Grid container spaceng={5}>
+                            {this.getPosts()}
+                        </Grid>
+                    </Box>
+                </Box>
             </div>
         );
     }
