@@ -7,6 +7,14 @@ import Typography from "@mui/material/Typography";
 class Post extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            modalOpen: false,
+            editFormOpen: false,
+            editFormInputs: {
+                title: "",
+                body: "",
+            },
+        }
     }
 
     render() {

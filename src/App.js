@@ -55,7 +55,7 @@ class App extends React.Component {
                         posts: posts,
                         createFormInputs: {
                             title: "",
-                            content: "",
+                            body: "",
                         },
                     });
                 })
