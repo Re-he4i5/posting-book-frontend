@@ -1,5 +1,6 @@
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import SendIcon from '@mui/icons-material/Send';
 
 function CreateForm(props) {
   return (
@@ -23,8 +24,7 @@ function CreateForm(props) {
       </div>
 
       <div>
-        <Button onClick={props.onSubmit}
-        >
+        <Button onClick={props.onSubmit} ariant="contained" endIcon={<SendIcon />}>
           Create
         </Button>
       </div>
