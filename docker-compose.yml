@@ -10,5 +10,7 @@ services:
     command: sh -c "yarn && yarn start"
     ports:
       - "3000:3000"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
     stdin_open: true
     tty: true
