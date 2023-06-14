@@ -1,8 +1,9 @@
 import { Button, Modal } from "@mui/material";
 
 function PostModal(props){
+
   const contents = (
-    <div>
+    <div className = "postModal">
       <h2>{props.post.title}</h2>
       <p>{props.post.body}</p>
       <Button
@@ -17,7 +18,7 @@ function PostModal(props){
   return (
     <Modal
       open = {props.open}
-      close = {props.onClose}
+      onClose = {props.onClose}
     >
       {contents}
     </Modal>
