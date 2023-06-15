@@ -40,6 +40,9 @@ class Post extends React.Component {
             <Button variant="contained" onClick={this.handleToggleModalOpen}>
               Detail
             </Button>
+            <Button variant="contained" onClick={(e) => this.props.onDelete(this.props.post.id, e)}>
+              Delete
+            </Button>
           </CardActions>
         </Card>
         <PostModal
