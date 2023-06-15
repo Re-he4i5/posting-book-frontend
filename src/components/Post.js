@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from '@mui/material/CardActions';
 import Typography from "@mui/material/Typography";
 import PostModal from "./PostModal";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 class Post extends React.Component {
   constructor(props) {
@@ -40,12 +41,21 @@ class Post extends React.Component {
             <Button variant="contained" onClick={this.handleToggleModalOpen}>
               Detail
             </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={(e) => this.props.onDelete(this.props.post.id, e)}
+              startIcon={< DeleteIcon/>}
+              >
+              Delete
+            </Button>
           </CardActions>
         </Card>
         <PostModal
           post = {this.props.post}
           open={this.state.modalOpen}
           onClose = {this.handleToggleModalOpen}
+          onDelete = {this.props.onDelete}
         />
       </div>
     );
