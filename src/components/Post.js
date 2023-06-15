@@ -49,6 +49,7 @@ class Post extends React.Component {
           post = {this.props.post}
           open={this.state.modalOpen}
           onClose = {this.handleToggleModalOpen}
+          onDelete = {this.props.onDelete}
         />
       </div>
     );

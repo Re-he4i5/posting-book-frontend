@@ -7,6 +7,12 @@ function PostModal(props){
       <h2>{props.post.title}</h2>
       <p>{props.post.body}</p>
       <Button
+          onClick={(e) => props.onDelete(props.post.id, e)}
+          variant="contained"
+        >
+          Delete
+        </Button>
+      <Button
           onClick={props.onClose}
           variant="contained"
         >
