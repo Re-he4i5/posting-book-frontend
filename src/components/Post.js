@@ -6,6 +6,7 @@ import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import PostModal from "./PostModal";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditForm from "./EditForm";
 
 class Post extends React.Component {
   constructor(props) {
@@ -19,10 +20,26 @@ class Post extends React.Component {
       },
     };
     this.handleToggleModalOpen = this.handleToggleModalOpen.bind(this);
+    this.handleToggleEditFormOpen = this.handleToggleEditFormOpen.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   handleToggleModalOpen() {
     this.setState({ modalOpen: !this.state.modalOpen });
+  }
+
+  handleToggleEditFormOpen() {
+    this.setState({
+      editFormOpen: !this.state.editFormOpen,
+    });
+  }
+
+  handleInputChange(itemName, e) {
+    const newInputs = Object.assign({}, this.state.editFormInputs);
+    newInputs[itemName] = e.target.value;
+    this.setState({
+      editFormInputs: newInputs,
+    });
   }
 
   render() {
@@ -38,6 +55,9 @@ class Post extends React.Component {
           <CardActions>
             <Button variant="contained" onClick={this.handleToggleModalOpen}>
               Detail
+            </Button>
+            <Button variant="contained" onClick={this.handleToggleEditFormOpen}>
+              Edit
             </Button>
             <Button
               variant="contained"
@@ -55,6 +75,14 @@ class Post extends React.Component {
           onClose={this.handleToggleModalOpen}
           onDelete={this.props.onDelete}
         />
+        {this.state.editFormOpen && (
+          <EditForm
+            post={this.props.post}
+            inputs={this.state.editFormInputs}
+            onChange={this.handleInputChange}
+            onSubmit={this.props.onUpdate}
+          />
+        )}
       </div>
     );
   }
