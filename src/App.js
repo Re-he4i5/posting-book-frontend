@@ -69,24 +69,25 @@ class App extends React.Component {
 
   handlePostDelete(id, e) {
     e.preventDefault();
-    this.axios.delete(`/posts/${id}`)
-        .then(res => {
-            const targetIndex = this.state.posts.findIndex(post => {
-                return post["id"] === res["data"]["id"]
-            })
-            console.log(targetIndex)
-            const posts = this.state.posts.slice();
-            posts.splice(targetIndex, 1);
-            console.log(posts)
-
-            this.setState({
-                posts: posts
-            });
-        })
-        .catch(data => {
-            console.log(data);
+    this.axios
+      .delete(`/posts/${id}`)
+      .then((res) => {
+        const targetIndex = this.state.posts.findIndex((post) => {
+          return post["id"] === res["data"]["id"];
         });
-}
+        console.log(targetIndex);
+        const posts = this.state.posts.slice();
+        posts.splice(targetIndex, 1);
+        console.log(posts);
+
+        this.setState({
+          posts: posts,
+        });
+      })
+      .catch((data) => {
+        console.log(data);
+      });
+  }
 
   componentDidMount() {
     this.axios
@@ -106,10 +107,7 @@ class App extends React.Component {
     return this.state.posts.map((post) => {
       return (
         <Grid item xs={4} key={post.id}>
-          <Post
-            post={post}
-            onDelete = {this.handlePostDelete}
-          />
+          <Post post={post} onDelete={this.handlePostDelete} />
         </Grid>
       );
     });
