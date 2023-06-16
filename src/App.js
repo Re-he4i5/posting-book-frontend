@@ -18,6 +18,7 @@ class App extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handlePostSubmit = this.handlePostSubmit.bind(this);
     this.handlePostDelete = this.handlePostDelete.bind(this);
+    this.handlePostUpdate = this.handlePostUpdate.bind(this);
   }
 
   get axios() {
@@ -69,24 +70,49 @@ class App extends React.Component {
 
   handlePostDelete(id, e) {
     e.preventDefault();
-    this.axios.delete(`/posts/${id}`)
-        .then(res => {
-            const targetIndex = this.state.posts.findIndex(post => {
-                return post["id"] === res["data"]["id"]
-            })
-            console.log(targetIndex)
-            const posts = this.state.posts.slice();
-            posts.splice(targetIndex, 1);
-            console.log(posts)
-
-            this.setState({
-                posts: posts
-            });
-        })
-        .catch(data => {
-            console.log(data);
+    this.axios
+      .delete(`/posts/${id}`)
+      .then((res) => {
+        const targetIndex = this.state.posts.findIndex((post) => {
+          return post["id"] === res["data"]["id"];
         });
-}
+        console.log(targetIndex);
+        const posts = this.state.posts.slice();
+        posts.splice(targetIndex, 1);
+        console.log(posts);
+
+        this.setState({
+          posts: posts,
+        });
+      })
+      .catch((data) => {
+        console.log(data);
+      });
+  }
+
+  handlePostUpdate(id, inputs, e) {
+    e.preventDefault();
+    const inputValues = Object.values(inputs);
+
+    if (inputValues.every((value) => value)) {
+      this.axios
+        .patch(`/posts/${id}`, {
+          post: inputs,
+        })
+        .then((results) => {
+          const posts = this.state.posts.slice();
+          const index = posts.findIndex((post) => post["id"] === id);
+          posts.splice(index, 1, results["data"]);
+
+          this.setState({
+            posts: posts,
+          });
+        })
+        .catch((data) => {
+          console.log(data);
+        });
+    }
+  }
 
   componentDidMount() {
     this.axios
@@ -108,7 +134,8 @@ class App extends React.Component {
         <Grid item xs={4} key={post.id}>
           <Post
             post={post}
-            onDelete = {this.handlePostDelete}
+            onDelete={this.handlePostDelete}
+            onUpdate={this.handlePostUpdate}
           />
         </Grid>
       );
