@@ -77,8 +77,10 @@ class Post extends React.Component {
         />
         {this.state.editFormOpen && (
           <EditForm
+            post={this.props.post}
             inputs={this.state.editFormInputs}
             onChange={this.handleInputChange}
+            onSubmit={this.props.onUpdate}
           />
         )}
       </div>
