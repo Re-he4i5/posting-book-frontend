@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Post from "./components/Post";
+import Book from "./components/Book";
 import CreateForm from "./components/CreateForm";
 
 class App extends React.Component {
@@ -13,12 +13,12 @@ class App extends React.Component {
         title: "",
         body: "",
       },
-      posts: [],
+      books: [],
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handlePostSubmit = this.handlePostSubmit.bind(this);
-    this.handlePostDelete = this.handlePostDelete.bind(this);
-    this.handlePostUpdate = this.handlePostUpdate.bind(this);
+    this.handleBookSubmit = this.handleBookSubmit.bind(this);
+    this.handleBookDelete = this.handleBookDelete.bind(this);
+    this.handleBookUpdate = this.handleBookUpdate.bind(this);
   }
 
   get axios() {
@@ -42,20 +42,20 @@ class App extends React.Component {
     });
   }
 
-  handlePostSubmit(e) {
+  handleBookSubmit(e) {
     e.preventDefault();
     const inputValues = Object.values(this.state.createFormInputs);
 
     if (inputValues.every((value) => value)) {
       this.axios
-        .post("/posts", {
-          post: this.state.createFormInputs,
+        .post("/api/books", {
+          book: this.state.createFormInputs,
         })
         .then((res) => {
-          const posts = this.state.posts.slice();
-          posts.push(res["data"]);
+          const books = this.state.books.slice();
+          books.push(res["data"]);
           this.setState({
-            posts: posts,
+            books: books,
             createFormInputs: {
               title: "",
               body: "",
@@ -68,21 +68,21 @@ class App extends React.Component {
     }
   }
 
-  handlePostDelete(id, e) {
+  handleBookDelete(id, e) {
     e.preventDefault();
     this.axios
-      .delete(`/posts/${id}`)
+      .delete(`/api/books/${id}`)
       .then((res) => {
-        const targetIndex = this.state.posts.findIndex((post) => {
-          return post["id"] === res["data"]["id"];
+        const targetIndex = this.state.books.findIndex((book) => {
+          return book["id"] === res["data"]["id"];
         });
         console.log(targetIndex);
-        const posts = this.state.posts.slice();
-        posts.splice(targetIndex, 1);
-        console.log(posts);
+        const books = this.state.books.slice();
+        books.splice(targetIndex, 1);
+        console.log(books);
 
         this.setState({
-          posts: posts,
+          books: books,
         });
       })
       .catch((data) => {
@@ -90,22 +90,22 @@ class App extends React.Component {
       });
   }
 
-  handlePostUpdate(id, inputs, e) {
+  handleBookUpdate(id, inputs, e) {
     e.preventDefault();
     const inputValues = Object.values(inputs);
 
     if (inputValues.every((value) => value)) {
       this.axios
-        .patch(`/posts/${id}`, {
-          post: inputs,
+        .patch(`/api/books/${id}`, {
+          book: inputs,
         })
         .then((results) => {
-          const posts = this.state.posts.slice();
-          const index = posts.findIndex((post) => post["id"] === id);
-          posts.splice(index, 1, results["data"]);
+          const books = this.state.books.slice();
+          const index = books.findIndex((book) => book["id"] === id);
+          books.splice(index, 1, results["data"]);
 
           this.setState({
-            posts: posts,
+            books: books,
           });
         })
         .catch((data) => {
@@ -116,11 +116,11 @@ class App extends React.Component {
 
   componentDidMount() {
     this.axios
-      .get("/posts")
+      .get("/api/books")
       .then((results) => {
         console.log(results);
         this.setState({
-          posts: results.data,
+          books: results.data,
         });
       })
       .catch((data) => {
@@ -128,14 +128,14 @@ class App extends React.Component {
       });
   }
 
-  getPosts() {
-    return this.state.posts.map((post) => {
+  getBooks() {
+    return this.state.books.map((book) => {
       return (
-        <Grid item xs={4} key={post.id}>
-          <Post
-            post={post}
-            onDelete={this.handlePostDelete}
-            onUpdate={this.handlePostUpdate}
+        <Grid item xs={4} key={book.id}>
+          <Book
+            book={book}
+            onDelete={this.handleBookDelete}
+            onUpdate={this.handleBookUpdate}
           />
         </Grid>
       );
@@ -151,12 +151,12 @@ class App extends React.Component {
             <CreateForm
               inputs={this.state.createFormInputs}
               onChange={this.handleInputChange}
-              onSubmit={this.handlePostSubmit}
+              onSubmit={this.handleBookSubmit}
             />
           </Box>
           <Box p={4}>
             <Grid container spaceng={5}>
-              {this.getPosts()}
+              {this.getBooks()}
             </Grid>
           </Box>
         </Box>

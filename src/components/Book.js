@@ -4,11 +4,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
-import PostModal from "./PostModal";
+import BookModal from "./BookModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditForm from "./EditForm";
 
-class Post extends React.Component {
+class Book extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,9 +48,9 @@ class Post extends React.Component {
         <Card variant="outlined">
           <CardContent>
             <Typography variant="h3" component="h3">
-              {this.props.post.title}
+              {this.props.book.title}
             </Typography>
-            <Typography variant="body2">{this.props.post.body}</Typography>
+            <Typography variant="body2">{this.props.book.body}</Typography>
           </CardContent>
           <CardActions>
             <Button variant="contained" onClick={this.handleToggleModalOpen}>
@@ -62,22 +62,22 @@ class Post extends React.Component {
             <Button
               variant="contained"
               color="error"
-              onClick={(e) => this.props.onDelete(this.props.post.id, e)}
+              onClick={(e) => this.props.onDelete(this.props.book.id, e)}
               startIcon={<DeleteIcon />}
             >
               Delete
             </Button>
           </CardActions>
         </Card>
-        <PostModal
-          post={this.props.post}
+        <BookModal
+          book={this.props.book}
           open={this.state.modalOpen}
           onClose={this.handleToggleModalOpen}
           onDelete={this.props.onDelete}
         />
         {this.state.editFormOpen && (
           <EditForm
-            post={this.props.post}
+            book={this.props.book}
             inputs={this.state.editFormInputs}
             onChange={this.handleInputChange}
             onSubmit={this.props.onUpdate}
@@ -88,4 +88,4 @@ class Post extends React.Component {
   }
 }
 
-export default Post;
+export default Book;
